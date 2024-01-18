@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ARP Scanner</title>
+  </head>
+  <body>
+    <h2>ARP Scanner</h2>
+    <form method="post" action="{% url 'main' %}">
+      {% csrf_token %}
+      <label for="start_ip">Start IP address:</label>
+      <input type="text" name="start_ip" required />
+      <br />
+      <br />
+      <label for="end_ip">End IP address:</label>
+      <input type="text" name="end_ip" required />
+      <br />
+      <br />
+      <input type="submit" value="Scan" />
+    </form>
+
+    {% if scan_results %}
+    <h2>Reachable IPs:</h2>
+    <ul>
+      {% for ip in scan_results %}
+      <li>{{ ip }}</li>
+      {% endfor %}
+    </ul>
+
+    <h2>Non-reachable IPs:</h2>
+    <ul>
+      {% for ip in non_reachable_ips %}
+      <li>{{ ip }}</li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+  </body>
+</html>
